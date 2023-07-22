@@ -18,10 +18,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 		return {};
 	  }
 	};
+
+	const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
   
 	return {
 	  store: {
-		favs: null,
+		favs: [],
 		people: [],
 		peopleDescription: null,
 		vehicles: [],
