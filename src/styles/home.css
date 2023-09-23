@@ -1,0 +1,29 @@
+.cardsContainer {
+    display: flex;
+    flex-direction: row;
+    overflow-x: scroll;
+}
+.card {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 calc(25% - 10px);
+    margin-right: 10px;
+    min-height: 300px;
+}
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.card-footer {
+    display: flex;
+    height: auto;
+    
+}
+#navBar {
+    padding: 20px 50px 20px 50px;
+}
+#starwarsIcon {
+    width: 70px;
+    height: 70px;
+}
