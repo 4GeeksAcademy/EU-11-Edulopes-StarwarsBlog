@@ -14,12 +14,17 @@ export const Single = () => {
 
   return (
     <div className="jumbotron">
-      <h1 className="display-4">This is {item.properties.name}</h1>
+      <h1 className="display-4">
+        This is {item.properties ? item.properties.name : "Name Not Available"}
+      </h1>
       <hr className="my-4" />
-      <p>Gender: {item.properties.gender}</p>
-      <p>Hair Color: {item.properties.hair_color}</p>
-      <p>Eye Color: {item.properties.eye_color}</p>
-      {/* Add more details if needed */}
+      {item.properties && (
+        <div>
+          <p>Gender: {item.properties.gender}</p>
+          <p>Hair Color: {item.properties.hair_color}</p>
+          <p>Eye Color: {item.properties.eye_color}</p>
+        </div>
+      )}
       <Link to="/">Back home</Link>
     </div>
   );
