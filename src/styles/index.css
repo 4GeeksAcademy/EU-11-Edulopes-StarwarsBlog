@@ -1,3 +1,21 @@
 /* 
     General Styles
 */
+.favorites-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .favorite-item {
+    display: flex;
+    align-items: center;
+  }
+  
+  .favorite-item span {
+    margin-right: 10px; 
+  }
+  
+  .dropdown-menu {
+    right: auto;
+    left: 0;
+  }

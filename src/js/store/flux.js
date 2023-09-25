@@ -3,16 +3,22 @@ const getState = ({ getStore, getActions, setStore }) => {
     try {
       const resp = await fetch(`https://www.swapi.tech/api/${resource}/`);
       const jsonData = await resp.json();
-      const tempArray = {};
+      const tempArray = [];
 
-      for (const item of jsonData.results) {
+      const detailPromises = jsonData.results.map(async (item) => {
         const uid = item.uid;
         const detailResp = await fetch(
           `https://www.swapi.tech/api/${resource}/${uid}`
         );
         const detailData = await detailResp.json();
-        tempArray[uid] = { uid, properties: detailData.result.properties };
-      }
+        return { uid, properties: detailData.result.properties };
+      });
+
+      const details = await Promise.all(detailPromises);
+
+      details.forEach((detail) => {
+        tempArray[detail.uid] = detail;
+      });
 
       return tempArray;
     } catch (error) {
@@ -36,15 +42,17 @@ const getState = ({ getStore, getActions, setStore }) => {
     actions: {
       addRemoveFav: (newFav) => {
         if (!getStore().favs) {
-          setStore({ favs: [newFav] });
+          setStore({ favs: [{ uid: newFav.uid, name: newFav.name }] });
           return;
         }
-        if (getStore().favs.indexOf(newFav) === -1) {
-          setStore({ favs: [...getStore().favs, newFav] });
+      
+        const isAlreadyFavorited = getStore().favs.some((fav) => fav.uid === newFav.uid);
+      
+        if (!isAlreadyFavorited) {
+          setStore({ favs: [...getStore().favs, { uid: newFav.uid, name: newFav.name }] });
         } else {
-          const newList = getStore().favs.filter((el) => el !== newFav);
+          const newList = getStore().favs.filter((fav) => fav.uid !== newFav.uid);
           setStore({ favs: newList });
-          console.log(newList);
         }
       },
       fetchPeopleList: async () => {

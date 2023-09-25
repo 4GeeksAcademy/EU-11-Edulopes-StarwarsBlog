@@ -1,29 +1,33 @@
 .cardsContainer {
-    display: flex;
-    flex-direction: row;
-    overflow-x: scroll;
+  display: flex;
+  flex-direction: row;
+  overflow-x: scroll;
+  margin: 45px;
 }
 .card {
-    display: flex;
-    flex-direction: column;
-    flex: 0 0 calc(25% - 10px);
-    margin-right: 10px;
-    min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 calc(25% - 10px);
+  margin-right: 10px;
+  min-height: 300px;
 }
 .card-body {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 .card-footer {
-    display: flex;
-    height: auto;
-    
+  display: flex;
+  justify-content: space-between;
+  height: auto;
+  background: white;
+  border: 0px;
+  margin: 20px 10px 0px 10px;
 }
 #navBar {
-    padding: 20px 50px 20px 50px;
+  padding: 20px 50px 20px 50px;
 }
 #starwarsIcon {
-    width: 70px;
-    height: 70px;
+  width: 70px;
+  height: 70px;
 }

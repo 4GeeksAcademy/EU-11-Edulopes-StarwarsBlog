@@ -1,0 +1,104 @@
+import React, { useState, useEffect, useContext } from "react";
+import PropTypes from "prop-types";
+import { useParams } from "react-router-dom";
+import { Context } from "../store/appContext";
+
+export const PlanetsProfile = () => {
+  const { store, actions } = useContext(Context);
+  const [planetsDetails, setPlanetsDetails] = useState();
+  const param = useParams();
+
+  const getPlanetsData = async () => {
+    const resp = await fetch("https://www.swapi.tech/api/planets/" + param.id);
+    const data = await resp.json();
+    setPlanetsDetails(data.result.properties);
+  };
+
+  useEffect(() => {
+    getPlanetsData();
+  }, []);
+
+  return (
+    <div className="container d-flex m-5">
+      <div className="container">
+        
+        <img
+          src="https://picsum.photos/800/400"
+          className="img-fluid"
+        />
+      </div>
+      <div className="container d-flex flex-column">
+      <h2 className="m-4 d-flex justify-content-center">
+          {planetsDetails && planetsDetails.name}{" "}
+          {planetsDetails && planetsDetails.description}{" "}
+        </h2>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod
+          tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim
+          veniam, quis nostrum exercitationem ullam corporis suscipit
+          laboriosam, nisi ut aliquid ex ea commodi consequatur. Quis aute iure
+          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+          pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in
+          culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+        <div className="container-flex border-top border-danger">
+          <div className="row d-flex category-fact-container">
+            <div className="col-sm-4 col-md-2">
+              <p>
+                <strong>Name:</strong>
+              </p>
+              <p className="fact-text">
+                {planetsDetails && planetsDetails.name}
+              </p>
+            </div>
+
+            <div className="col-sm-4 col-md-2">
+              <p>
+                <strong>Climate:</strong>
+              </p>
+              <p className="fact-text">
+                {planetsDetails && planetsDetails.climate}
+              </p>
+            </div>
+
+            <div className="col-sm-4 col-md-2">
+              <p>
+                <strong>Terrain:</strong>
+              </p>
+              <p className="fact-text">
+                {planetsDetails && planetsDetails.terrain}
+              </p>
+            </div>
+
+            <div className="col-sm-4 col-md-2">
+              <p>
+                <strong>Climate:</strong>
+              </p>
+              <p className="fact-text">
+                {planetsDetails && planetsDetails.climate}
+              </p>
+            </div>
+
+            <div className="col-sm-4 col-md-2">
+              <p>
+                <strong>Gravity:</strong>
+              </p>
+              <p className="fact-text">
+                {planetsDetails && planetsDetails.gravity}
+              </p>
+            </div>
+
+            <div className="col-sm-4 col-md-2">
+              <p>
+                <strong>Rotation Period:</strong>
+              </p>
+              <p className="fact-text">
+                {planetsDetails && planetsDetails.rotation_period}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};

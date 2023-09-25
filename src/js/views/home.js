@@ -1,21 +1,30 @@
 import "../../styles/home.css";
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { faHeart as faHeartRegular } from "@fortawesome/free-regular-svg-icons";
+import { faHeart as faHeartSolid } from "@fortawesome/free-solid-svg-icons";
 
 export const Home = (props) => {
   const { store, actions } = useContext(Context);
   const params = useParams();
+  const [likedItems, setLikedItems] = useState({});
 
   const handleAddRemoveFav = (item) => {
+    const { uid } = item;
+    const updatedLikedItems = { ...likedItems };
+    if (updatedLikedItems[uid]) {
+      delete updatedLikedItems[uid];
+    } else {
+      updatedLikedItems[uid] = item;
+    }
+    setLikedItems(updatedLikedItems);
     actions.addRemoveFav(item);
   };
 
   const isFavorite = (uid) => {
-    return store.favs && store.favs.includes(uid);
+    return Boolean(likedItems[uid]);
   };
 
   useEffect(() => {
@@ -28,7 +37,7 @@ export const Home = (props) => {
     <div>
       <div className="container col-md-12" id="charactersDiv">
         <h2>Characters</h2>
-        <div className="container cardsContainer col-md-8">
+        <div className="cardsContainer col-md-11">
           {store.people.map((people) => (
             <div
               className="card"
@@ -61,19 +70,27 @@ export const Home = (props) => {
                 )}
                 <div className="card-footer">
                   <Link
-                    to={`/single/${people.uid}`}
+                    to={`/characterCard/${people.uid}`}
                     className="btn btn-primary"
                   >
                     Learn More
                   </Link>
                   <button
                     className="btn btn-outline-warning"
-                    onClick={() => handleAddRemoveFav(people)}
+                    onClick={() =>
+                      handleAddRemoveFav({
+                        uid: people.uid,
+                        name: people.properties
+                          ? people.properties.name
+                          : "Name Not Available",
+                      })
+                    }
                   >
                     <FontAwesomeIcon
                       icon={
                         isFavorite(people.uid) ? faHeartSolid : faHeartRegular
                       }
+                      style={{ color: "#ff0000" }}
                     />
                   </button>
                 </div>
@@ -82,10 +99,9 @@ export const Home = (props) => {
           ))}
         </div>
       </div>
-
       <div className="container col-md-12" id="planetsDiv">
         <h2>Planets</h2>
-        <div className="container cardsContainer col-md-8">
+        <div className="cardsContainer col-md-11">
           {store.planets.map((planets) => (
             <div
               className="card"
@@ -115,19 +131,27 @@ export const Home = (props) => {
                 )}
                 <div className="card-footer">
                   <Link
-                    to={`/single/${planets.uid}`}
+                    to={`/planetsCard/${planets.uid}`}
                     className="btn btn-primary"
                   >
                     Learn More
                   </Link>
                   <button
                     className="btn btn-outline-warning"
-                    onClick={() => handleAddRemoveFav(planets)}
+                    onClick={() =>
+                      handleAddRemoveFav({
+                        uid: planets.uid,
+                        name: planets.properties
+                          ? planets.properties.name
+                          : "Name Not Available",
+                      })
+                    }
                   >
                     <FontAwesomeIcon
                       icon={
                         isFavorite(planets.uid) ? faHeartSolid : faHeartRegular
                       }
+                      style={{ color: "#ff0000" }}
                     />
                   </button>
                 </div>
@@ -138,7 +162,7 @@ export const Home = (props) => {
       </div>
       <div className="container col-md-12" id="vehiclesDiv">
         <h2>Vehicles</h2>
-        <div className="container cardsContainer col-md-8">
+        <div className="cardsContainer col-md-11">
           {store.vehicles.map((vehicles) => (
             <div
               className="card"
@@ -168,19 +192,27 @@ export const Home = (props) => {
                 )}
                 <div className="card-footer">
                   <Link
-                    to={`/single/${vehicles.uid}`}
+                    to={`/vehiclesCard/${vehicles.uid}`}
                     className="btn btn-primary"
                   >
                     Learn More
                   </Link>
                   <button
                     className="btn btn-outline-warning"
-                    onClick={() => handleAddRemoveFav(vehicles)}
+                    onClick={() =>
+                      handleAddRemoveFav({
+                        uid: vehicles.uid,
+                        name: vehicles.properties
+                          ? vehicles.properties.name
+                          : "Name Not Available",
+                      })
+                    }
                   >
                     <FontAwesomeIcon
                       icon={
                         isFavorite(vehicles.uid) ? faHeartSolid : faHeartRegular
                       }
+                      style={{ color: "#ff0000" }}
                     />
                   </button>
                 </div>
